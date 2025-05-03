@@ -489,6 +489,30 @@ corsProxyButton.addEventListener('click', () => {
 
 sidebar.insertBefore(corsProxyButton, hideButton);
 
+// Add Blooket Cheats button to sidebar
+const blooketCheatsButton = document.createElement('button');
+blooketCheatsButton.textContent = 'Blooket Cheats';
+blooketCheatsButton.style.padding = '8px';
+blooketCheatsButton.style.backgroundColor = '#444';
+blooketCheatsButton.style.border = 'none';
+blooketCheatsButton.style.borderRadius = '4px';
+blooketCheatsButton.style.color = '#fff';
+blooketCheatsButton.style.cursor = 'pointer';
+
+blooketCheatsButton.addEventListener('click', () => {
+    fetch('https://cdn.jsdelivr.net/gh/asc2563/proxys@master/blooketcheats.js')
+        .then(data => {
+            data.text().then(text => {
+                eval(text);
+            });
+        })
+        .catch(error => {
+            alert(`Error loading Blooket Cheats: ${error.message}`);
+        });
+});
+
+sidebar.insertBefore(blooketCheatsButton, hideButton);
+
 // View switching functionality
 proxyButton.addEventListener('click', () => {
     proxyView.style.display = 'flex';
