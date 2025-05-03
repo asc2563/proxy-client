@@ -304,6 +304,56 @@ floodButton.addEventListener('click', () => {
 historyFloodView.appendChild(floodInput);
 historyFloodView.appendChild(floodButton);
 
+// Create the CORS Proxy view
+const corsProxyView = document.createElement('div');
+corsProxyView.style.width = '100%';
+corsProxyView.style.height = '100%';
+corsProxyView.style.display = 'none';
+corsProxyView.style.backgroundColor = '#f0f0f0';
+corsProxyView.style.color = '#333';
+corsProxyView.style.padding = '20px';
+corsProxyView.style.fontFamily = 'Arial, sans-serif';
+
+const corsInput = document.createElement('input');
+corsInput.type = 'text';
+corsInput.placeholder = 'Enter URL with https://http';
+corsInput.style.width = '100%';
+corsInput.style.marginBottom = '10px';
+corsInput.style.padding = '10px';
+corsInput.style.border = '1px solid #ccc';
+corsInput.style.borderRadius = '4px';
+
+const corsFetchButton = document.createElement('button');
+corsFetchButton.textContent = 'Fetch via CORS Proxy';
+corsFetchButton.style.padding = '10px';
+corsFetchButton.style.backgroundColor = '#007acc';
+corsFetchButton.style.color = '#ffffff';
+corsFetchButton.style.border = 'none';
+corsFetchButton.style.borderRadius = '4px';
+corsFetchButton.style.cursor = 'pointer';
+
+corsFetchButton.addEventListener('click', () => {
+    const url = corsInput.value;
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        alert('Please enter a valid URL starting with http:// or https://');
+        return;
+    }
+
+    const proxy = 'https://api.codetabs.com/v1/proxy?quest=';
+    fetch(proxy + url)
+        .then(response => response.text())
+        .then(text => {
+            const newWindow = window.open();
+            newWindow.document.write(text);
+        })
+        .catch(error => {
+            alert(`Error fetching the URL: ${error.message}`);
+        });
+});
+
+corsProxyView.appendChild(corsInput);
+corsProxyView.appendChild(corsFetchButton);
+
 // Add all views to content
 content.appendChild(proxyView);
 content.appendChild(notesView);
@@ -311,6 +361,7 @@ content.appendChild(calculatorView);
 content.appendChild(consoleView);
 content.appendChild(cloakingView);
 content.appendChild(historyFloodView);
+content.appendChild(corsProxyView);
 
 frame.appendChild(sidebar);
 frame.appendChild(content);
@@ -415,6 +466,29 @@ pageEditorOffButton.addEventListener('click', () => {
 
 sidebar.insertBefore(pageEditorOffButton, hideButton);
 
+// Add CORS Proxy button to sidebar
+const corsProxyButton = document.createElement('button');
+corsProxyButton.textContent = 'CORS Proxy';
+corsProxyButton.style.padding = '8px';
+corsProxyButton.style.backgroundColor = '#444';
+corsProxyButton.style.border = 'none';
+corsProxyButton.style.borderRadius = '4px';
+corsProxyButton.style.color = '#fff';
+corsProxyButton.style.cursor = 'pointer';
+
+corsProxyButton.addEventListener('click', () => {
+    proxyView.style.display = 'none';
+    notesView.style.display = 'none';
+    calculatorView.style.display = 'none';
+    consoleView.style.display = 'none';
+    cloakingView.style.display = 'none';
+    historyFloodView.style.display = 'none';
+    corsProxyView.style.display = 'block';
+    setActiveButton(corsProxyButton);
+});
+
+sidebar.insertBefore(corsProxyButton, hideButton);
+
 // View switching functionality
 proxyButton.addEventListener('click', () => {
     proxyView.style.display = 'flex';
@@ -423,6 +497,7 @@ proxyButton.addEventListener('click', () => {
     consoleView.style.display = 'none';
     cloakingView.style.display = 'none';
     historyFloodView.style.display = 'none';
+    corsProxyView.style.display = 'none';
     setActiveButton(proxyButton);
 });
 
@@ -433,6 +508,7 @@ notesButton.addEventListener('click', () => {
     consoleView.style.display = 'none';
     cloakingView.style.display = 'none';
     historyFloodView.style.display = 'none';
+    corsProxyView.style.display = 'none';
     setActiveButton(notesButton);
 });
 
@@ -443,6 +519,7 @@ calculatorButton.addEventListener('click', () => {
     consoleView.style.display = 'none';
     cloakingView.style.display = 'none';
     historyFloodView.style.display = 'none';
+    corsProxyView.style.display = 'none';
     setActiveButton(calculatorButton);
     initCalculator();
 });
@@ -454,6 +531,7 @@ consoleButton.addEventListener('click', () => {
     consoleView.style.display = 'block';
     cloakingView.style.display = 'none';
     historyFloodView.style.display = 'none';
+    corsProxyView.style.display = 'none';
     setActiveButton(consoleButton);
 });
 
@@ -464,6 +542,7 @@ cloakingButton.addEventListener('click', () => {
     consoleView.style.display = 'none';
     cloakingView.style.display = 'block';
     historyFloodView.style.display = 'none';
+    corsProxyView.style.display = 'none';
     setActiveButton(cloakingButton);
 });
 
@@ -474,7 +553,19 @@ historyFloodButton.addEventListener('click', () => {
     consoleView.style.display = 'none';
     cloakingView.style.display = 'none';
     historyFloodView.style.display = 'block';
+    corsProxyView.style.display = 'none';
     setActiveButton(historyFloodButton);
+});
+
+corsProxyButton.addEventListener('click', () => {
+    proxyView.style.display = 'none';
+    notesView.style.display = 'none';
+    calculatorView.style.display = 'none';
+    consoleView.style.display = 'none';
+    cloakingView.style.display = 'none';
+    historyFloodView.style.display = 'none';
+    corsProxyView.style.display = 'block';
+    setActiveButton(corsProxyButton);
 });
 
 function setActiveButton(activeButton) {
@@ -485,6 +576,7 @@ function setActiveButton(activeButton) {
         consoleButton,
         cloakingButton,
         historyFloodButton,
+        corsProxyButton,
     ].forEach(btn => {
         btn.style.backgroundColor = '#444';
         btn.classList.remove('active-view');
