@@ -355,6 +355,32 @@ function launch() {
 
     sidebar.insertBefore(historyFloodButton, hideButton);
 
+    // Add About:Blank Tab Cloak button to sidebar
+    const tabCloakButton = document.createElement('button');
+    tabCloakButton.textContent = 'Tab Cloak';
+    tabCloakButton.style.padding = '8px';
+    tabCloakButton.style.backgroundColor = '#444';
+    tabCloakButton.style.border = 'none';
+    tabCloakButton.style.borderRadius = '4px';
+    tabCloakButton.style.color = '#fff';
+    tabCloakButton.style.cursor = 'pointer';
+
+    tabCloakButton.addEventListener('click', () => {
+        let url = prompt('Enter the URL to cloak:', 'https://example.com');
+        let win = window.open();
+        let iframe = win.document.createElement('iframe');
+        iframe.style =
+            'position:fixed;width:100vw;height:100vh;top:0px;left:0px;right:0px;bottom:0px;z-index:2147483647;background-color:white;border:none;';
+        if (url.includes('https://') || url.includes('http://')) {
+            iframe.src = url;
+        } else {
+            iframe.src = 'https://' + url;
+        }
+        win.document.body.appendChild(iframe);
+    });
+
+    sidebar.insertBefore(tabCloakButton, hideButton);
+
     // View switching functionality
     proxyButton.addEventListener('click', () => {
         proxyView.style.display = 'flex';
