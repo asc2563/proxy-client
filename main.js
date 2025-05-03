@@ -192,11 +192,71 @@ function launch() {
     consoleView.appendChild(runButton);
     consoleView.appendChild(outputDiv);
 
+    // Create the cloaking view
+    const cloakingView = document.createElement('div');
+    cloakingView.style.width = '100%';
+    cloakingView.style.height = '100%';
+    cloakingView.style.display = 'none';
+    cloakingView.style.backgroundColor = '#f0f0f0';
+    cloakingView.style.color = '#333';
+    cloakingView.style.padding = '20px';
+    cloakingView.style.fontFamily = 'Arial, sans-serif';
+
+    const titleInput = document.createElement('input');
+    titleInput.type = 'text';
+    titleInput.placeholder = 'Enter new tab title';
+    titleInput.style.width = '100%';
+    titleInput.style.marginBottom = '10px';
+    titleInput.style.padding = '10px';
+    titleInput.style.border = '1px solid #ccc';
+    titleInput.style.borderRadius = '4px';
+
+    const iconInput = document.createElement('input');
+    iconInput.type = 'text';
+    iconInput.placeholder = 'Enter new tab icon URL';
+    iconInput.style.width = '100%';
+    iconInput.style.marginBottom = '10px';
+    iconInput.style.padding = '10px';
+    iconInput.style.border = '1px solid #ccc';
+    iconInput.style.borderRadius = '4px';
+
+    const applyButton = document.createElement('button');
+    applyButton.textContent = 'Apply Changes';
+    applyButton.style.padding = '10px';
+    applyButton.style.backgroundColor = '#007acc';
+    applyButton.style.color = '#ffffff';
+    applyButton.style.border = 'none';
+    applyButton.style.borderRadius = '4px';
+    applyButton.style.cursor = 'pointer';
+
+    applyButton.addEventListener('click', () => {
+        const newTitle = titleInput.value;
+        const newIcon = iconInput.value;
+
+        function gcloak() {
+            const link =
+                document.querySelector("link[rel*='icon']") || document.createElement('link');
+            link.type = 'image/x-icon';
+            link.rel = 'shortcut icon';
+            link.href = newIcon || 'default-icon.png'; // Fallback to default icon
+            document.title = newTitle || 'Default Title'; // Fallback to default title
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+
+        gcloak();
+        setInterval(gcloak, 1000);
+    });
+
+    cloakingView.appendChild(titleInput);
+    cloakingView.appendChild(iconInput);
+    cloakingView.appendChild(applyButton);
+
     // Add all views to content
     content.appendChild(proxyView);
     content.appendChild(notesView);
     content.appendChild(calculatorView);
     content.appendChild(consoleView);
+    content.appendChild(cloakingView);
 
     frame.appendChild(sidebar);
     frame.appendChild(content);
@@ -215,12 +275,25 @@ function launch() {
 
     sidebar.insertBefore(consoleButton, hideButton);
 
+    // Add cloaking button to sidebar
+    const cloakingButton = document.createElement('button');
+    cloakingButton.textContent = 'Cloaking';
+    cloakingButton.style.padding = '8px';
+    cloakingButton.style.backgroundColor = '#444';
+    cloakingButton.style.border = 'none';
+    cloakingButton.style.borderRadius = '4px';
+    cloakingButton.style.color = '#fff';
+    cloakingButton.style.cursor = 'pointer';
+
+    sidebar.insertBefore(cloakingButton, hideButton);
+
     // View switching functionality
     proxyButton.addEventListener('click', () => {
         proxyView.style.display = 'flex';
         notesView.style.display = 'none';
         calculatorView.style.display = 'none';
         consoleView.style.display = 'none';
+        cloakingView.style.display = 'none';
         setActiveButton(proxyButton);
     });
 
@@ -229,6 +302,7 @@ function launch() {
         notesView.style.display = 'block';
         calculatorView.style.display = 'none';
         consoleView.style.display = 'none';
+        cloakingView.style.display = 'none';
         setActiveButton(notesButton);
     });
 
@@ -237,6 +311,7 @@ function launch() {
         notesView.style.display = 'none';
         calculatorView.style.display = 'block';
         consoleView.style.display = 'none';
+        cloakingView.style.display = 'none';
         setActiveButton(calculatorButton);
         initCalculator();
     });
@@ -246,11 +321,21 @@ function launch() {
         notesView.style.display = 'none';
         calculatorView.style.display = 'none';
         consoleView.style.display = 'block';
+        cloakingView.style.display = 'none';
         setActiveButton(consoleButton);
     });
 
+    cloakingButton.addEventListener('click', () => {
+        proxyView.style.display = 'none';
+        notesView.style.display = 'none';
+        calculatorView.style.display = 'none';
+        consoleView.style.display = 'none';
+        cloakingView.style.display = 'block';
+        setActiveButton(cloakingButton);
+    });
+
     function setActiveButton(activeButton) {
-        [proxyButton, notesButton, calculatorButton, consoleButton].forEach(btn => {
+        [proxyButton, notesButton, calculatorButton, consoleButton, cloakingButton].forEach(btn => {
             btn.style.backgroundColor = '#444';
             btn.classList.remove('active-view');
         });
