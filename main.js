@@ -536,8 +536,9 @@ hideButton.addEventListener('click', function () {
 // Add global keyboard event listener to show the frame when backslash is pressed
 document.addEventListener('keydown', function (event) {
     if (event.key === '\\') {
-        if (window.proxyFrame && window.proxyFrame.style.display === 'none') {
-            window.proxyFrame.style.display = 'flex';
+        if (window.proxyFrame) {
+            window.proxyFrame.style.display =
+                window.proxyFrame.style.display === 'none' ? 'flex' : 'none';
         }
     }
 });
