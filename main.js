@@ -381,6 +381,42 @@ function launch() {
 
     sidebar.insertBefore(tabCloakButton, hideButton);
 
+    // Add Page Editor button to sidebar
+    const pageEditorButton = document.createElement('button');
+    pageEditorButton.textContent = 'Page Editor';
+    pageEditorButton.style.padding = '8px';
+    pageEditorButton.style.backgroundColor = '#444';
+    pageEditorButton.style.border = 'none';
+    pageEditorButton.style.borderRadius = '4px';
+    pageEditorButton.style.color = '#fff';
+    pageEditorButton.style.cursor = 'pointer';
+
+    pageEditorButton.addEventListener('click', () => {
+        document.body.contentEditable = 'true';
+        document.designMode = 'on';
+        alert('Page is now editable. Refresh the page to disable editing.');
+    });
+
+    sidebar.insertBefore(pageEditorButton, hideButton);
+
+    // Add Page Editor Off button to sidebar
+    const pageEditorOffButton = document.createElement('button');
+    pageEditorOffButton.textContent = 'Page Editor Off';
+    pageEditorOffButton.style.padding = '8px';
+    pageEditorOffButton.style.backgroundColor = '#444';
+    pageEditorOffButton.style.border = 'none';
+    pageEditorOffButton.style.borderRadius = '4px';
+    pageEditorOffButton.style.color = '#fff';
+    pageEditorOffButton.style.cursor = 'pointer';
+
+    pageEditorOffButton.addEventListener('click', () => {
+        document.body.contentEditable = 'false';
+        document.designMode = 'off';
+        alert('Page editing is now disabled.');
+    });
+
+    sidebar.insertBefore(pageEditorOffButton, hideButton);
+
     // View switching functionality
     proxyButton.addEventListener('click', () => {
         proxyView.style.display = 'flex';
