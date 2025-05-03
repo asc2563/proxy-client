@@ -1,4 +1,4 @@
-function launch() {
+
     console.log('Launching the application...');
 
     // Create a global variable to store the frame reference
@@ -545,4 +545,4 @@ function launch() {
     });
 
     console.log('Application launched successfully. Press backslash (\\) to show if hidden.');
-}
+
