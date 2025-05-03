@@ -251,12 +251,68 @@ function launch() {
     cloakingView.appendChild(iconInput);
     cloakingView.appendChild(applyButton);
 
+    // Create the history flood view
+    const historyFloodView = document.createElement('div');
+    historyFloodView.style.width = '100%';
+    historyFloodView.style.height = '100%';
+    historyFloodView.style.display = 'none';
+    historyFloodView.style.backgroundColor = '#f0f0f0';
+    historyFloodView.style.color = '#333';
+    historyFloodView.style.padding = '20px';
+    historyFloodView.style.fontFamily = 'Arial, sans-serif';
+
+    const floodInput = document.createElement('input');
+    floodInput.type = 'number';
+    floodInput.placeholder = 'Enter history flood amount';
+    floodInput.style.width = '100%';
+    floodInput.style.marginBottom = '10px';
+    floodInput.style.padding = '10px';
+    floodInput.style.border = '1px solid #ccc';
+    floodInput.style.borderRadius = '4px';
+
+    const floodButton = document.createElement('button');
+    floodButton.textContent = 'Flood History';
+    floodButton.style.padding = '10px';
+    floodButton.style.backgroundColor = '#007acc';
+    floodButton.style.color = '#ffffff';
+    floodButton.style.border = 'none';
+    floodButton.style.borderRadius = '4px';
+    floodButton.style.cursor = 'pointer';
+
+    floodButton.addEventListener('click', () => {
+        const num = parseInt(floodInput.value, 10);
+        if (isNaN(num) || num <= 0) {
+            alert('Please enter a valid positive number.');
+            return;
+        }
+
+        let done = false;
+        const x = window.location.href;
+        for (let i = 1; i <= num; i++) {
+            history.pushState(0, 0, i === num ? x : i.toString());
+            if (i === num) {
+                done = true;
+            }
+        }
+        if (done) {
+            alert(
+                `History Flooding Successful!\n ${
+                    window.location.href
+                } \nNow Appears In Your History ${num} ${num === 1 ? 'time.' : 'times.'}`
+            );
+        }
+    });
+
+    historyFloodView.appendChild(floodInput);
+    historyFloodView.appendChild(floodButton);
+
     // Add all views to content
     content.appendChild(proxyView);
     content.appendChild(notesView);
     content.appendChild(calculatorView);
     content.appendChild(consoleView);
     content.appendChild(cloakingView);
+    content.appendChild(historyFloodView);
 
     frame.appendChild(sidebar);
     frame.appendChild(content);
@@ -287,6 +343,18 @@ function launch() {
 
     sidebar.insertBefore(cloakingButton, hideButton);
 
+    // Add history flood button to sidebar
+    const historyFloodButton = document.createElement('button');
+    historyFloodButton.textContent = 'History Flood';
+    historyFloodButton.style.padding = '8px';
+    historyFloodButton.style.backgroundColor = '#444';
+    historyFloodButton.style.border = 'none';
+    historyFloodButton.style.borderRadius = '4px';
+    historyFloodButton.style.color = '#fff';
+    historyFloodButton.style.cursor = 'pointer';
+
+    sidebar.insertBefore(historyFloodButton, hideButton);
+
     // View switching functionality
     proxyButton.addEventListener('click', () => {
         proxyView.style.display = 'flex';
@@ -294,6 +362,7 @@ function launch() {
         calculatorView.style.display = 'none';
         consoleView.style.display = 'none';
         cloakingView.style.display = 'none';
+        historyFloodView.style.display = 'none';
         setActiveButton(proxyButton);
     });
 
@@ -303,6 +372,7 @@ function launch() {
         calculatorView.style.display = 'none';
         consoleView.style.display = 'none';
         cloakingView.style.display = 'none';
+        historyFloodView.style.display = 'none';
         setActiveButton(notesButton);
     });
 
@@ -312,6 +382,7 @@ function launch() {
         calculatorView.style.display = 'block';
         consoleView.style.display = 'none';
         cloakingView.style.display = 'none';
+        historyFloodView.style.display = 'none';
         setActiveButton(calculatorButton);
         initCalculator();
     });
@@ -322,6 +393,7 @@ function launch() {
         calculatorView.style.display = 'none';
         consoleView.style.display = 'block';
         cloakingView.style.display = 'none';
+        historyFloodView.style.display = 'none';
         setActiveButton(consoleButton);
     });
 
@@ -331,11 +403,29 @@ function launch() {
         calculatorView.style.display = 'none';
         consoleView.style.display = 'none';
         cloakingView.style.display = 'block';
+        historyFloodView.style.display = 'none';
         setActiveButton(cloakingButton);
     });
 
+    historyFloodButton.addEventListener('click', () => {
+        proxyView.style.display = 'none';
+        notesView.style.display = 'none';
+        calculatorView.style.display = 'none';
+        consoleView.style.display = 'none';
+        cloakingView.style.display = 'none';
+        historyFloodView.style.display = 'block';
+        setActiveButton(historyFloodButton);
+    });
+
     function setActiveButton(activeButton) {
-        [proxyButton, notesButton, calculatorButton, consoleButton, cloakingButton].forEach(btn => {
+        [
+            proxyButton,
+            notesButton,
+            calculatorButton,
+            consoleButton,
+            cloakingButton,
+            historyFloodButton,
+        ].forEach(btn => {
             btn.style.backgroundColor = '#444';
             btn.classList.remove('active-view');
         });
