@@ -375,7 +375,7 @@ urlBar.style.marginBottom = '10px';
 
 // Create the iframe
 const pocketBrowserIframe = document.createElement('iframe');
-pocketBrowserIframe.src = 'https://google.com';
+pocketBrowserIframe.src = 'https://google.com?igu=1';
 pocketBrowserIframe.style.width = '100%';
 pocketBrowserIframe.style.height = '100%';
 pocketBrowserIframe.style.border = 'none';
