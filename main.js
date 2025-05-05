@@ -354,6 +354,21 @@ corsFetchButton.addEventListener('click', () => {
 corsProxyView.appendChild(corsInput);
 corsProxyView.appendChild(corsFetchButton);
 
+// Create the pocket browser view
+const pocketBrowserView = document.createElement('div');
+pocketBrowserView.style.width = '100%';
+pocketBrowserView.style.height = '100%';
+pocketBrowserView.style.display = 'none';
+pocketBrowserView.style.backgroundColor = '#ffffff';
+
+const pocketBrowserIframe = document.createElement('iframe');
+pocketBrowserIframe.src = 'https://google.com';
+pocketBrowserIframe.style.width = '100%';
+pocketBrowserIframe.style.height = '100%';
+pocketBrowserIframe.style.border = 'none';
+
+pocketBrowserView.appendChild(pocketBrowserIframe);
+
 // Add all views to content
 content.appendChild(proxyView);
 content.appendChild(notesView);
@@ -362,6 +377,7 @@ content.appendChild(consoleView);
 content.appendChild(cloakingView);
 content.appendChild(historyFloodView);
 content.appendChild(corsProxyView);
+content.appendChild(pocketBrowserView);
 
 frame.appendChild(sidebar);
 frame.appendChild(content);
@@ -513,6 +529,18 @@ blooketCheatsButton.addEventListener('click', () => {
 
 sidebar.insertBefore(blooketCheatsButton, hideButton);
 
+// Add Pocket Browser button to sidebar
+const pocketBrowserButton = document.createElement('button');
+pocketBrowserButton.textContent = 'Pocket Browser';
+pocketBrowserButton.style.padding = '8px';
+pocketBrowserButton.style.backgroundColor = '#444';
+pocketBrowserButton.style.border = 'none';
+pocketBrowserButton.style.borderRadius = '4px';
+pocketBrowserButton.style.color = '#fff';
+pocketBrowserButton.style.cursor = 'pointer';
+
+sidebar.insertBefore(pocketBrowserButton, hideButton);
+
 // Create the exploits view
 const exploitsView = document.createElement('div');
 exploitsView.style.width = '100%';
@@ -560,7 +588,22 @@ exploitsButton.addEventListener('click', () => {
     historyFloodView.style.display = 'none';
     corsProxyView.style.display = 'none';
     exploitsView.style.display = 'block';
+    pocketBrowserView.style.display = 'none';
     setActiveButton(exploitsButton);
+});
+
+// Add functionality to switch to the pocket browser view
+pocketBrowserButton.addEventListener('click', () => {
+    proxyView.style.display = 'none';
+    notesView.style.display = 'none';
+    calculatorView.style.display = 'none';
+    consoleView.style.display = 'none';
+    cloakingView.style.display = 'none';
+    historyFloodView.style.display = 'none';
+    corsProxyView.style.display = 'none';
+    exploitsView.style.display = 'none';
+    pocketBrowserView.style.display = 'block';
+    setActiveButton(pocketBrowserButton);
 });
 
 // View switching functionality
@@ -573,6 +616,7 @@ proxyButton.addEventListener('click', () => {
     historyFloodView.style.display = 'none';
     corsProxyView.style.display = 'none';
     exploitsView.style.display = 'none';
+    pocketBrowserView.style.display = 'none';
     setActiveButton(proxyButton);
 });
 
@@ -585,6 +629,7 @@ notesButton.addEventListener('click', () => {
     historyFloodView.style.display = 'none';
     corsProxyView.style.display = 'none';
     exploitsView.style.display = 'none';
+    pocketBrowserView.style.display = 'none';
     setActiveButton(notesButton);
 });
 
@@ -597,6 +642,7 @@ calculatorButton.addEventListener('click', () => {
     historyFloodView.style.display = 'none';
     corsProxyView.style.display = 'none';
     exploitsView.style.display = 'none';
+    pocketBrowserView.style.display = 'none';
     setActiveButton(calculatorButton);
     initCalculator();
 });
@@ -610,6 +656,7 @@ consoleButton.addEventListener('click', () => {
     historyFloodView.style.display = 'none';
     corsProxyView.style.display = 'none';
     exploitsView.style.display = 'none';
+    pocketBrowserView.style.display = 'none';
     setActiveButton(consoleButton);
 });
 
@@ -622,6 +669,7 @@ cloakingButton.addEventListener('click', () => {
     historyFloodView.style.display = 'none';
     corsProxyView.style.display = 'none';
     exploitsView.style.display = 'none';
+    pocketBrowserView.style.display = 'none';
     setActiveButton(cloakingButton);
 });
 
@@ -634,6 +682,7 @@ historyFloodButton.addEventListener('click', () => {
     historyFloodView.style.display = 'block';
     corsProxyView.style.display = 'none';
     exploitsView.style.display = 'none';
+    pocketBrowserView.style.display = 'none';
     setActiveButton(historyFloodButton);
 });
 
@@ -646,6 +695,7 @@ corsProxyButton.addEventListener('click', () => {
     historyFloodView.style.display = 'none';
     corsProxyView.style.display = 'block';
     exploitsView.style.display = 'none';
+    pocketBrowserView.style.display = 'none';
     setActiveButton(corsProxyButton);
 });
 
@@ -658,7 +708,8 @@ function setActiveButton(activeButton) {
         cloakingButton,
         historyFloodButton,
         corsProxyButton,
-        exploitsButton, // Added exploitsButton
+        exploitsButton,
+        pocketBrowserButton, // Added pocketBrowserButton
     ].forEach(btn => {
         btn.style.backgroundColor = '#444';
         btn.classList.remove('active-view');
