@@ -513,6 +513,56 @@ blooketCheatsButton.addEventListener('click', () => {
 
 sidebar.insertBefore(blooketCheatsButton, hideButton);
 
+// Create the exploits view
+const exploitsView = document.createElement('div');
+exploitsView.style.width = '100%';
+exploitsView.style.height = '100%';
+exploitsView.style.display = 'none';
+exploitsView.style.backgroundColor = '#f0f0f0';
+exploitsView.style.color = '#333';
+exploitsView.style.padding = '20px';
+exploitsView.style.fontFamily = 'Arial, sans-serif';
+
+// Move Tab Cloak button to exploits view
+exploitsView.appendChild(tabCloakButton);
+
+// Move Page Editor On button to exploits view
+exploitsView.appendChild(pageEditorButton);
+
+// Move Page Editor Off button to exploits view
+exploitsView.appendChild(pageEditorOffButton);
+
+// Move Blooket Cheats button to exploits view
+exploitsView.appendChild(blooketCheatsButton);
+
+// Add Exploits button to sidebar
+const exploitsButton = document.createElement('button');
+exploitsButton.textContent = 'Exploits';
+exploitsButton.style.padding = '8px';
+exploitsButton.style.backgroundColor = '#444';
+exploitsButton.style.border = 'none';
+exploitsButton.style.borderRadius = '4px';
+exploitsButton.style.color = '#fff';
+exploitsButton.style.cursor = 'pointer';
+
+sidebar.insertBefore(exploitsButton, hideButton);
+
+// Add exploits view to content
+content.appendChild(exploitsView);
+
+// Add functionality to switch to the exploits view
+exploitsButton.addEventListener('click', () => {
+    proxyView.style.display = 'none';
+    notesView.style.display = 'none';
+    calculatorView.style.display = 'none';
+    consoleView.style.display = 'none';
+    cloakingView.style.display = 'none';
+    historyFloodView.style.display = 'none';
+    corsProxyView.style.display = 'none';
+    exploitsView.style.display = 'block';
+    setActiveButton(exploitsButton);
+});
+
 // View switching functionality
 proxyButton.addEventListener('click', () => {
     proxyView.style.display = 'flex';
@@ -522,6 +572,7 @@ proxyButton.addEventListener('click', () => {
     cloakingView.style.display = 'none';
     historyFloodView.style.display = 'none';
     corsProxyView.style.display = 'none';
+    exploitsView.style.display = 'none';
     setActiveButton(proxyButton);
 });
 
@@ -533,6 +584,7 @@ notesButton.addEventListener('click', () => {
     cloakingView.style.display = 'none';
     historyFloodView.style.display = 'none';
     corsProxyView.style.display = 'none';
+    exploitsView.style.display = 'none';
     setActiveButton(notesButton);
 });
 
@@ -544,6 +596,7 @@ calculatorButton.addEventListener('click', () => {
     cloakingView.style.display = 'none';
     historyFloodView.style.display = 'none';
     corsProxyView.style.display = 'none';
+    exploitsView.style.display = 'none';
     setActiveButton(calculatorButton);
     initCalculator();
 });
@@ -556,6 +609,7 @@ consoleButton.addEventListener('click', () => {
     cloakingView.style.display = 'none';
     historyFloodView.style.display = 'none';
     corsProxyView.style.display = 'none';
+    exploitsView.style.display = 'none';
     setActiveButton(consoleButton);
 });
 
@@ -567,6 +621,7 @@ cloakingButton.addEventListener('click', () => {
     cloakingView.style.display = 'block';
     historyFloodView.style.display = 'none';
     corsProxyView.style.display = 'none';
+    exploitsView.style.display = 'none';
     setActiveButton(cloakingButton);
 });
 
@@ -578,6 +633,7 @@ historyFloodButton.addEventListener('click', () => {
     cloakingView.style.display = 'none';
     historyFloodView.style.display = 'block';
     corsProxyView.style.display = 'none';
+    exploitsView.style.display = 'none';
     setActiveButton(historyFloodButton);
 });
 
@@ -589,6 +645,7 @@ corsProxyButton.addEventListener('click', () => {
     cloakingView.style.display = 'none';
     historyFloodView.style.display = 'none';
     corsProxyView.style.display = 'block';
+    exploitsView.style.display = 'none';
     setActiveButton(corsProxyButton);
 });
 
@@ -601,6 +658,7 @@ function setActiveButton(activeButton) {
         cloakingButton,
         historyFloodButton,
         corsProxyButton,
+        exploitsButton, // Added exploitsButton
     ].forEach(btn => {
         btn.style.backgroundColor = '#444';
         btn.classList.remove('active-view');
