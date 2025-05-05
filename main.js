@@ -360,13 +360,38 @@ pocketBrowserView.style.width = '100%';
 pocketBrowserView.style.height = '100%';
 pocketBrowserView.style.display = 'none';
 pocketBrowserView.style.backgroundColor = '#ffffff';
+// pocketBrowserView.style.display = 'flex';
+pocketBrowserView.style.flexDirection = 'column';
 
+// Create the URL bar
+const urlBar = document.createElement('input');
+urlBar.type = 'text';
+urlBar.placeholder = 'Enter URL and press Enter';
+urlBar.style.width = '100%';
+urlBar.style.padding = '10px';
+urlBar.style.border = '1px solid #ccc';
+urlBar.style.boxSizing = 'border-box';
+urlBar.style.marginBottom = '10px';
+
+// Create the iframe
 const pocketBrowserIframe = document.createElement('iframe');
 pocketBrowserIframe.src = 'https://google.com';
 pocketBrowserIframe.style.width = '100%';
 pocketBrowserIframe.style.height = '100%';
 pocketBrowserIframe.style.border = 'none';
 
+// Update iframe src when a URL is entered in the URL bar
+urlBar.addEventListener('keypress', event => {
+    if (event.key === 'Enter') {
+        const url = urlBar.value.trim();
+        if (url) {
+            pocketBrowserIframe.src =
+                url.startsWith('http://') || url.startsWith('https://') ? url : `https://${url}`;
+        }
+    }
+});
+
+pocketBrowserView.appendChild(urlBar);
 pocketBrowserView.appendChild(pocketBrowserIframe);
 
 // Add all views to content
