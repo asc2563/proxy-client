@@ -146,7 +146,7 @@ class ProxyClientApp {
         proxyView.style.height = '100%';
         proxyView.style.display = 'flex';
         const iframe = document.createElement('iframe');
-        iframe.src = 'https://student.lhost.dev';
+        iframe.src = 'https://portal.apai.shadowshark.ipv64.net/'; // Example proxy URL
         iframe.style.width = '100%';
         iframe.style.height = '100%';
         iframe.style.border = 'none';
