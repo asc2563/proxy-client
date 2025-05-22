@@ -554,15 +554,16 @@ class ProxyClientApp {
         blooketCheatsButton.style.color = '#fff';
         blooketCheatsButton.style.cursor = 'pointer';
         blooketCheatsButton.addEventListener('click', () => {
-            fetch('https://cdn.jsdelivr.net/gh/asc2563/proxys@master/blooketcheats.js')
-                .then(data => {
-                    data.text().then(text => {
-                        eval(text);
-                    });
-                })
-                .catch(error => {
-                    alert(`Error loading Blooket Cheats: ${error.message}`);
-                });
+            try {
+                (function () {
+                    let bkmkltscript = document.createElement('script');
+                    bkmkltscript.src =
+                        'https://cdn.jsdelivr.net/gh/asc2563/proxys@master/blooketcheats.js';
+                    document.body.appendChild(bkmkltscript);
+                })();
+            } catch (error) {
+                alert(`Error loading Blooket Cheats: ${error.message}`);
+            }
         });
 
         // Fake Crash
